@@ -9,3 +9,4 @@ Install:
 pip install asyncio
 pip install async
 pip install evdev
+pip install pyserial
