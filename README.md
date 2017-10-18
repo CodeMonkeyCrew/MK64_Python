@@ -1,12 +1,9 @@
-# PythonControllerInputRead
+# MK64_Pyton
+S1 - Projekt - MK64 Server
 
-S1 - Projekt - Mario Card
+# Dependecies:
 
-Script to enable N64 Controller
-
-Install:
-
-pip install asyncio
-pip install async
-pip install evdev
-pip install pyserial
+*pip install asyncio
+*pip install async
+*pip install evdev
+*pip install pyserial
