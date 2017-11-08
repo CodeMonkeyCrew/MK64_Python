@@ -2,9 +2,6 @@ from serial import Serial
  
 #Starting serial connection
 serialPort = Serial
-#Check if port failed to open
-if (serialPort.isOpen() == False):
-        serialPort.open()
  
 #Flush before receiving or sending any data
 
