@@ -1,13 +1,23 @@
-import serial
+from serial import Serial
+ 
+#Starting serial connection
+serialPort = Serial
+#Check if port failed to open
+if (serialPort.isOpen() == False):
+        serialPort.open()
+ 
+#Flush before receiving or sending any data
 
-open_ser = serial
+
 
 def open_serial_port(port, rate):
-    global open_ser
-    open_ser =  serial.Serial(port, baudrate=rate)
+    global serialPort
+    serialPort =  Serial(port, baudrate=rate)
+    serialPort.flushInput()
+    serialPort.flushOutput()
 
 def send_data(command, value):
-    open_ser.write(command + ':' + value) 
+    serialPort.write(command + ':' + value) 
     #print(data)
 
 #def readlineCR():
