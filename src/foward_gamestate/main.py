@@ -40,7 +40,6 @@ while True:
 
     while 1:
         data = readlineCR()
-        data = str("Hello").encode()
         if data:
             try:
                 conn.send(data)  # echo back to client
