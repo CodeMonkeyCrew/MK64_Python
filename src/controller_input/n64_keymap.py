@@ -1,4 +1,8 @@
 from enum import Enum
+from command import Commands
+from player import Player
+
+
 '''
 {
 	('EV_MSC', 4L): [('MSC_SCAN', 4L)],
@@ -42,23 +46,41 @@ class N64_KEYS(Enum):
      CROSS_Y = 17
 
 
-def getButtonName(keyvalue):
-    return N64_KEYS(keyvalue).name
+def readButtonCommand(keyvalue, player: Player, forwardmethode):
+    tmp_command = Commands()
+    if(keyvalue == N64_KEYS.A.value):
+       tmp_command = Commands.ACCELERATE
+    elif(keyvalue == N64_KEYS.B.value):
+        tmp_command.command = Commands.THROTTLE
+    elif(keyvalue == N64_KEYS.START.value):
+        tmp_command.command = Commands.START
+    elif(keyvalue == N64_KEYS.Z.value):
+        tmp_command.command = Commands.USE
+    forwardmethode(tmp_command, 0)
 
-def getStickNameAndValue(keyvalue, value):
-    response = ""
-    response = N64_KEYS(keyvalue).name
-    if keyvalue == 1:
+def readCommandLeftOrRight(keyvalue, value, player: Player, forwardmethode):
+    #response = N64_KEYS(keyvalue).name
+    tmp_command = Commands()
+    if keyvalue == 0:
+        tmp_command.value = value
+        if value < 120:  
+            tmp_command.command = Commands.LEFT
+            return tmp_command
+        if value > 130:
+            tmp_command.command = Commands.RIGHT
+            return tmp_command
+    tmp_command.command = Commands.STRAIGHT
+    return forwardmethode(tmp_command, value) 
+
+'''     if keyvalue == 1:
         if value < 120:
             return response + " UP: " + str(value)
         if value > 130:
             return response + " DOWN: " + str(value)
-    elif keyvalue == 0:
-        if value < 120:
-            return response + " LEFT " + str(value)
-        if value > 130:
-            return response + " RIGHT " + str(value)
-    elif keyvalue == 16:
+    el
+ ''' 
+    
+'''     elif keyvalue == 16:
         if value == 1:
             return response + " RIGHT"
         if value  < 0:
@@ -67,6 +89,6 @@ def getStickNameAndValue(keyvalue, value):
         if value == 1:
             return response + " DOWN"
         if value  < 0:
-            return response + " UP"
+            return response + " UP" '''
 
 
