@@ -2,15 +2,13 @@ import input_controller
 import serial_controller
 import asyncio
 import config_reader
-import time
 from player import Player
 
 players = []
 player = Player
 
 # Read Settings
-config = config_reader.read_config('../settings.ini')
-
+config = config_reader.read_config('settings.ini')
 
 # Create Players from settings
 def createPlayerFromConfig():
@@ -37,7 +35,7 @@ createPlayerFromConfig()
 loop = asyncio.get_event_loop()
 
 for player in players:
-    asyncio.ensure_future(input_controller.read_input_events(player,serial_controller.send_data()))
+    asyncio.ensure_future(input_controller.read_input_events(player, serial_controller.send_data))
 #start loop
 loop.run_forever()
 loop.close()

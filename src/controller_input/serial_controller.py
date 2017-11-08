@@ -1,6 +1,6 @@
 import serial
 
-open_ser
+open_ser = serial
 
 def open_serial_port(port, rate):
     global open_ser
