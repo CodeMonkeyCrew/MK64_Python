@@ -2,7 +2,7 @@
 import serial, socket
 
 #serial port
-open_ser: serial
+open_ser
 #socket
 TCP_IP = '127.0.0.1'
 TCP_PORT = 54321
