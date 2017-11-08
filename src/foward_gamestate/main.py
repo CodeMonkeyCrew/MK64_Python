@@ -1,30 +1,30 @@
 #start serial
-import serial, socket, errno
+import  socket, errno
 import config_reader as reader
 from socket import error as SocketError
 
-#serial port
-open_ser = serial
+from serial import Serial
+
+
 #client list
 clientList= []
 #read config
 conf = reader.read_config("settings.ini")
 
+
+#setup serial
+
+serialPort = Serial(conf['Serial']['Serial_Port'], conf['Serial']['Baudrate'])
 #setup socket
 serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)    #AF_INET = IPv4
 serverSocket.bind((conf['Server']['TCP_IP'], int(conf['Server']['TCP_PORT'])))
 serverSocket.listen(2) #allow up to 2 unaccepted connections
 print ("Server started and waiting for players")
 
-#open serial
-def open_serial_port(port, rate):
-    global open_ser
-    open_ser =  serial.Serial(port, baudrate=rate)
-
 def readlineCR():
     rv = ""
     while True:
-        ch = open_ser.read()
+        ch = serialPort.read()
         rv += ch
         if ch == '\r' or ch == '':
             return rv  
