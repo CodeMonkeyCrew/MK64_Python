@@ -1,5 +1,6 @@
 from serial import Serial
- 
+from message import createMessage
+from command import Commands
 #Starting serial connection
 serialPort = Serial
  
@@ -14,7 +15,8 @@ def open_serial_port(port, rate):
     serialPort.flushOutput()
 
 def send_data(command, value):
-    serialPort.write(command + ':' + value) 
+    input = [Commands[command],value]
+    serialPort.write(createMessage(input)) 
     #print(data)
 
 #def readlineCR():

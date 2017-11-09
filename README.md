@@ -6,6 +6,7 @@ S1 - Projekt - MK64 Server
 * pip install asyncio
 * pip install evdev
 * pip install pyserial
+* pip install bitarray
 ```
 
 # Serial:
