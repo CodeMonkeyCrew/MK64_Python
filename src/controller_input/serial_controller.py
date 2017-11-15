@@ -3,10 +3,9 @@ from message import createMessage
 from command import Commands
 import config_reader
 
-ser = None
-_port = 0
-_rate = 0
-
+_port = "/dev/ttyS0"
+_rate = 115200
+ser = Serial(_port, _rate, timeout=1)
 
 config = config_reader.read_config('settings.ini')
 
