@@ -14,9 +14,8 @@ def open_serial_port(port, rate):
     serialPort.flushInput()
     serialPort.flushOutput()
 
-def send_data(command, value):
-    input = [Commands[command],value]
-    serialPort.write(createMessage(input)) 
+def send_data(message):
+    serialPort.write(message) 
     #print(data)
 
 #def readlineCR():

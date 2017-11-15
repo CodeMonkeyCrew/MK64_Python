@@ -1,8 +1,9 @@
 import input_controller
-import serial_controller
 import asyncio
 import config_reader
 from player import Player
+from serial_controller import open_serial_port
+
 
 players = []
 player = Player
@@ -24,8 +25,7 @@ def createPlayerFromConfig():
             players.append(player)
             curr_numb += 1
 
-# Init Serial
-serial_controller.open_serial_port(config['Serial']['Serial_Port'],config['Serial']['Baudrate'])
+
 
 # Start
 # Config Player
@@ -35,7 +35,8 @@ createPlayerFromConfig()
 loop = asyncio.get_event_loop()
 
 for player in players:
-    asyncio.ensure_future(input_controller.read_input_events(player, serial_controller.send_data))
+    asyncio.ensure_future(input_controller.read_input_events(player, open_serial_port(config["Serial"]["Serial_Port"], config["Serial"]["Baudrate"])))
+
 #start loop
 loop.run_forever()
 loop.close()

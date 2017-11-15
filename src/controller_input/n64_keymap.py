@@ -1,34 +1,5 @@
 from enum import Enum
-from command import Commands
-from player import Player
 
-
-'''
-{
-	('EV_MSC', 4L): [('MSC_SCAN', 4L)],
-	('EV_KEY', 1L): 
-		[
-		(['BTN_JOYSTICK', 'BTN_TRIGGER'], 288L),
-		('BTN_THUMB', 289L), ('BTN_THUMB2', 290L), 
-		('BTN_TOP', 291L), 
-		('BTN_TOP2', 292L), 
-		('BTN_PINKIE', 293L), 
-		('BTN_BASE', 294L), 
-		('BTN_BASE2', 295L), 
-		('BTN_BASE3', 296L), 
-		('BTN_BASE4', 297L), 
-		('BTN_BASE5', 298L), 
-		('BTN_BASE6', 299L)
-		], 
-	('EV_ABS', 3L): 
-		[
-		(('ABS_X', 0L), AbsInfo(value=128, min=0, max=255, fuzz=0, flat=15, resolution=0)), 			(('ABS_Y', 1L), AbsInfo(value=128, min=0, max=255, fuzz=0, flat=15, resolution=0)), 			(('ABS_Z', 2L), AbsInfo(value=129, min=0, max=255, fuzz=0, flat=15, resolution=0)), 			(('ABS_RZ', 5L), AbsInfo(value=128, min=0, max=255, fuzz=0, flat=15, resolution=0)), 			(('ABS_HAT0X', 16L), AbsInfo(value=0, min=-1, max=1, fuzz=0, flat=0, resolution=0)), 			(('ABS_HAT0Y', 17L), AbsInfo(value=0, min=-1, max=1, fuzz=0, flat=0, resolution=0))
-		], 
-	('EV_SYN', 0L): [
-		('SYN_REPORT', 0L), ('SYN_CONFIG', 1L), ('SYN_DROPPED', 3L), ('?', 4L)
-		]
-}
-'''
 class N64_KEYS(Enum):
      A = 293
      B = 292
@@ -45,50 +16,5 @@ class N64_KEYS(Enum):
      CROSS_X = 16
      CROSS_Y = 17
 
-
-def readButtonCommand(keyvalue, player: Player, forwardmethode):
-    tmp_command = Commands()
-    if(keyvalue == N64_KEYS.A.value):
-       tmp_command = Commands.ACCELERATE
-    elif(keyvalue == N64_KEYS.B.value):
-        tmp_command.command = Commands.THROTTLE
-    elif(keyvalue == N64_KEYS.START.value):
-        tmp_command.command = Commands.START
-    elif(keyvalue == N64_KEYS.Z.value):
-        tmp_command.command = Commands.USE
-    forwardmethode(tmp_command, 0)
-
-def readCommandLeftOrRight(keyvalue, value, player: Player, forwardmethode):
-    #response = N64_KEYS(keyvalue).name
-    tmp_command = Commands()
-    if keyvalue == 0:
-        tmp_command.value = value
-        if value < 120:  
-            tmp_command.command = Commands.LEFT
-            return tmp_command
-        if value > 130:
-            tmp_command.command = Commands.RIGHT
-            return tmp_command
-    tmp_command.command = Commands.STRAIGHT
-    return forwardmethode(tmp_command, value) 
-
-'''     if keyvalue == 1:
-        if value < 120:
-            return response + " UP: " + str(value)
-        if value > 130:
-            return response + " DOWN: " + str(value)
-    el
- ''' 
-    
-'''     elif keyvalue == 16:
-        if value == 1:
-            return response + " RIGHT"
-        if value  < 0:
-            return response + " LEFT"
-    else:
-        if value == 1:
-            return response + " DOWN"
-        if value  < 0:
-            return response + " UP" '''
-
-
+# Init Serial
+#serial_controller.open_serial_port(config['Serial']['Serial_Port'],config['Serial']['Baudrate'])
