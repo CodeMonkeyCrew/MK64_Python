@@ -2,7 +2,6 @@ import input_controller
 import asyncio
 import config_reader
 from player import Player
-from serial_controller import open_serial_port
 
 
 players = []
