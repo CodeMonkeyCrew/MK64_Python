@@ -1,15 +1,19 @@
 from serial import Serial
 from message import createMessage
 from command import Commands
+import config_reader
+
 ser = None
 _port = 0
 _rate = 0
 
+
+config = config_reader.read_config('settings.ini')
+
 def open_serial_port(port, rate):
-   global _port
-   _port = port
-   global rate
-   _rate = rate
+    _port = config["Serial"]["Serial_Port"]
+    _rate =  config["Serial"]["Baudrate"]
+ 
 
 def send_data(message):
     print(_port)

@@ -23,7 +23,6 @@ def init_input_device(port):
     return evdev.InputDevice(port)
 
 async def read_input_events(player):
-    open_serial_port(config["Serial"]["Serial_Port"], config["Serial"]["Baudrate"]))
     async for event in player.device.async_read_loop():  
         if event.type == ecodes.EV_KEY:
             tmp_command = 0
