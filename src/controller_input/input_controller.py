@@ -25,7 +25,7 @@ def init_input_device(port):
 async def read_input_events(player):
     async for event in player.device.async_read_loop():  
         if event.type == ecodes.EV_KEY:
-            tmp_command = 0
+            tmp_command = 10
             keyvalue = event.code
             if(keyvalue == N64_KEYS.A.value):
                tmp_command = Commands.ACCELERATE
@@ -35,8 +35,8 @@ async def read_input_events(player):
                 tmp_command = Commands.START
             elif(keyvalue == N64_KEYS.Z.value):
                 tmp_command = Commands.USE
-            print(createMessage(tmp_command.value, 0))
-            send_data(createMessage(tmp_command.value, 0))
+            if tmp_command <10:
+                send_data(createMessage(tmp_command.value, 0))
         elif event.type == ecodes.EV_ABS:
             if event.code != ecodes.ABS_Z:
                 tmp_command = 0
