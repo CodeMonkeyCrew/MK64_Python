@@ -10,7 +10,7 @@ _rate = 0
 
 config = config_reader.read_config('settings.ini')
 
-def open_serial_port(port, rate):
+def open_serial_port():
     _port = config["Serial"]["Serial_Port"]
     _rate =  config["Serial"]["Baudrate"]
  

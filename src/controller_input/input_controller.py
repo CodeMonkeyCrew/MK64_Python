@@ -3,7 +3,7 @@ from evdev import InputDevice, categorize, ecodes, KeyEvent
 from n64_keymap import N64_KEYS
 import asyncio, evdev
 from message import createMessage
-from serial_controller import open_serial_port
+from serial_controller import open_serial_port, send_data
 from enum import Enum
 
 class Commands(Enum):
@@ -23,6 +23,7 @@ def init_input_device(port):
     return evdev.InputDevice(port)
 
 async def read_input_events(player):
+    open_serial_port()
     async for event in player.device.async_read_loop():  
         if event.type == ecodes.EV_KEY:
             tmp_command = 0
@@ -36,7 +37,7 @@ async def read_input_events(player):
             elif(keyvalue == N64_KEYS.Z.value):
                 tmp_command = Commands.USE
             print(createMessage(tmp_command.value, 0))
-            serial.sendData(createMessage(tmp_command.value, 0))
+            sendData(createMessage(tmp_command.value, 0))
         elif event.type == ecodes.EV_ABS:
             if event.code != ecodes.ABS_Z:
                 tmp_command = 0
