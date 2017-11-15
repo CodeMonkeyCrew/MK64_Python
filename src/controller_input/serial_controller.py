@@ -3,20 +3,14 @@ from message import createMessage
 from command import Commands
 import config_reader
 
-_port = "/dev/ttyS0"
-_rate = 115200
-ser = Serial(_port, _rate, timeout=1)
 
 config = config_reader.read_config('settings.ini')
-
-def open_serial_port():
-    _port = config["Serial"]["Serial_Port"]
-    _rate =  config["Serial"]["Baudrate"]
+_port = config["Serial"]["Serial_Port"]
+_rate =  config["Serial"]["Baudrate"]
+ser = Serial(_port, _rate, timeout=1)
  
 
 def send_data(message):
-    print(_port)
-    print(_rate)
     if(ser.isOpen() == False):
         ser.open()
     ser.flushInput()
