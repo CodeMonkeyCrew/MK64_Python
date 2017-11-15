@@ -35,7 +35,7 @@ async def read_input_events(player):
                 tmp_command = Commands.START
             elif(keyvalue == N64_KEYS.Z.value):
                 tmp_command = Commands.USE
-            if tmp_command <10:
+            if tmp_command.value <10:
                 send_data(createMessage(tmp_command.value, 0))
         elif event.type == ecodes.EV_ABS:
             if event.code != ecodes.ABS_Z:
