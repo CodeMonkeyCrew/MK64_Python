@@ -37,7 +37,7 @@ async def read_input_events(player):
             elif(keyvalue == N64_KEYS.Z.value):
                 tmp_command = Commands.USE
             print(createMessage(tmp_command.value, 0))
-            sendData(createMessage(tmp_command.value, 0))
+            send_data(createMessage(tmp_command.value, 0))
         elif event.type == ecodes.EV_ABS:
             if event.code != ecodes.ABS_Z:
                 tmp_command = 0
