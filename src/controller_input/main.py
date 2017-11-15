@@ -35,7 +35,7 @@ createPlayerFromConfig()
 loop = asyncio.get_event_loop()
 
 for player in players:
-    asyncio.ensure_future(input_controller.read_input_events(player, open_serial_port(config["Serial"]["Serial_Port"], config["Serial"]["Baudrate"])))
+    asyncio.ensure_future(input_controller.read_input_events(player))
 
 #start loop
 loop.run_forever()

@@ -1,22 +1,24 @@
 from serial import Serial
 from message import createMessage
 from command import Commands
-#Starting serial connection
-serialPort = Serial
- 
-#Flush before receiving or sending any data
-
-
+ser = None
+_port = 0
+_rate = 0
 
 def open_serial_port(port, rate):
-    global serialPort
-    serialPort =  Serial(port, baudrate=rate)
-    serialPort.flushInput()
-    serialPort.flushOutput()
+   global _port
+   _port = port
+   global rate
+   _rate = rate
 
 def send_data(message):
-    serialPort.write(message) 
-    #print(data)
+    print(_port)
+    print(_rate)
+    if(ser.isOpen() == False):
+        ser.open()
+    ser.flushInput()
+    ser.flushOutput()
+    ser.write(message) 
 
 #def readlineCR():
 #    rv = ""
