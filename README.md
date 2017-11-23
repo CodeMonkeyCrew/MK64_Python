@@ -7,6 +7,7 @@ S1 - Projekt - MK64 Server
 * pip install evdev
 * pip install pyserial
 * pip install bitarray
+* pip install wiringpi
 ```
 
 # Serial:

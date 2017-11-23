@@ -26,6 +26,7 @@ def createMessage(input, value):
     message.setall(False)
     message = setCommand(input, message)
     message = setValue(value, message)
+    print(BitArray.to_bytes(message.value))
     return message
 
 

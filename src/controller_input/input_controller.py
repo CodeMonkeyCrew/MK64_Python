@@ -3,7 +3,7 @@ from evdev import InputDevice, categorize, ecodes, KeyEvent
 from n64_keymap import N64_KEYS
 import asyncio, evdev
 from message import createMessage
-from serial_controller import send_data
+#from serial_controller import send_data
 from enum import Enum
 
 class Commands(Enum):
@@ -36,7 +36,8 @@ async def read_input_events(player):
             elif(keyvalue == N64_KEYS.Z.value):
                 tmp_command = Commands.USE
             if tmp_command.value <10:
-                send_data(createMessage(tmp_command.value, 0))
+                #send_data(createMessage(tmp_command.value, 0))
+                createMessage(tmp_command.value, 0)
         elif event.type == ecodes.EV_ABS:
             if event.code != ecodes.ABS_Z:
                 tmp_command = 0
@@ -45,8 +46,8 @@ async def read_input_events(player):
                 if keyvalue == 0:
                     if value < 120:  
                         tmp_command = Commands.LEFT
-                        send_data(createMessage(tmp_command.value, value))
+                        #send_data(createMessage(tmp_command.value, value))
                     if value > 130:
                         tmp_command = Commands.RIGHT
-                        send_data(createMessage(tmp_command.value, value))
+                        #send_data(createMessage(tmp_command.value, value))
             
