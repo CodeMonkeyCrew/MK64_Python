@@ -1,4 +1,4 @@
-#import spidev
+import spidev
 import time
 
 spi = spidev.SpiDev()
