@@ -13,14 +13,10 @@ gspi.threewire = False
 
 def send_command_over_spi(message):
     try:
+        print("send:",messsage)
         resp = spi.xfer([(message[0] & 0xFF),message[1] & 0XFF])
-        value = resp[0] & 0xFF
-        while True:
-            print("sending: ", value)
-            resp = spi.xfer([value])
-            value = resp[0] & 0xFF
-            print("received: ", value)
-            time.sleep(0.1)
+        print("received: ", resp)
+        time.sleep(0.1)
         #end while
     except KeyboardInterrupt:
         spi.close()
