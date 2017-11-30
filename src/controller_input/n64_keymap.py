@@ -15,6 +15,3 @@ class N64_KEYS(Enum):
      JOYSTICK_Y = 1
      CROSS_X = 16
      CROSS_Y = 17
-
-# Init Serial
-#serial_controller.open_serial_port(config['Serial']['Serial_Port'],config['Serial']['Baudrate'])

@@ -1,4 +1,4 @@
-import input_controller
+import n64_controller_input_reader as input_controller
 import asyncio
 import config_reader
 from player import Player
@@ -10,7 +10,7 @@ player = Player
 # Read Settings
 config = config_reader.read_config('settings.ini')
 
-# Create Players from settings
+# Create Players from settingsmessage
 def createPlayerFromConfig():
     curr_numb = 0
     for port in config['Controller']:

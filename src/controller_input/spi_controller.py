@@ -1,15 +1,28 @@
-import wiringpi
+#import spidev
+import time
 
-SPIchannel = 1 #SPI Channel (CE1)
-SPIspeed = 500000 #Clock Speed in Hz
-wiringpi.wiringPiSetupGpio()
-wiringpi.wiringPiSPISetup(SPIchannel, SPIspeed)
+spi = spidev.SpiDev()
+spi.open(0, 0)
+spi.bits_per_word = 8
+spi.cshigh = False
+spi.loop = False
+spi.lsbfirst = False
+spi.max_speed_hz = 9600
+spi.mode = 0b00 # clock polarity 0, clock phase 0
+spi.threewire = False
 
-sendData = str(42) #will send TWO bytes, a byte 4 and a byte 2
-recvData = wiringpi.wiringPiSPIDataRW(SPIchannel, sendData)
-#recvData now holds a list [NumOfBytes, recvDataStr] e.g. [2, '\x9A\xCD']
+def send_command_over_spi(message):
+    try:
+        resp = spi.xfer([(message[0] & 0xFF),message[1] & 0XFF])
+        value = resp[0] & 0xFF
+        while True:
+            print("sending: ", value)
+            resp = spi.xfer([value])
+            value = resp[0] & 0xFF
+            print("received: ", value)
+            time.sleep(0.1)
+        #end while
+    except KeyboardInterrupt:
+        spi.close()
+    #end try 
 
-#alternatively, to send a single byte:
-sendData = chr(42) #will send a single byte containing 42
-recvData = wiringpi.wiringPiSPIDataRW(SPIchannel, sendData)
-#recvData is again a list e.g. [1, '\x9A']
