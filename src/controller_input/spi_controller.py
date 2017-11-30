@@ -9,7 +9,7 @@ spi.loop = False
 spi.lsbfirst = False
 spi.max_speed_hz = 9600
 spi.mode = 0b00 # clock polarity 0, clock phase 0
-spi.threewire = False
+gspi.threewire = False
 
 def send_command_over_spi(message):
     try:
