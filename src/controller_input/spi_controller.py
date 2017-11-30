@@ -13,7 +13,7 @@ spi.threewire = False
 
 def send_command_over_spi(message):
     try:
-        print("send:",messsage)
+        print("send:", message)
         resp = spi.xfer([(message[0] & 0xFF),message[1] & 0XFF])
         print("received: ", resp)
         time.sleep(0.1)
