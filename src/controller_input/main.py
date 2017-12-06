@@ -38,11 +38,12 @@ print ("Server started and waiting for players")
 
 
 
-currplayer = 1
-while len(players) < int(config['General']['Number_of_Players']):
+connectionnumber = 0
+while connectionnumber < int(config['General']['Number_of_Players']):
         conn, addr = serverSocket.accept()
         print ('Connection address:', addr)
-        players[currplayer].connection = conn
+        players[connectionnumber].connection = conn
+        connectionnumber +=1
 
 def dummyfill():
     for player in players:
