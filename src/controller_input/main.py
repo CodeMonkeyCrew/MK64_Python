@@ -2,7 +2,7 @@ import n64_controller_input_reader as input_controller
 import asyncio
 import config_reader
 from player import Player
-
+from socket import error as SocketError
 
 players = []
 player = Player
