@@ -48,7 +48,8 @@ if config['General']['Enable_Sockets']:
 
 def dummyfill():
     for player in players:
-        data = bytes.fromhex('0x40B2')
+        data = bytes.fromhex('40B2')
+        print(data)
         player.connection.send(data)
 
 #get loop
