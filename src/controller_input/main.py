@@ -30,11 +30,27 @@ def createPlayerFromConfig():
 # Config Player
 createPlayerFromConfig()
 
+#setup socket
+serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)    #AF_INET = IPv4
+serverSocket.bind((conf['Server']['TCP_IP'], int(conf['Server']['TCP_PORT'])))
+serverSocket.listen(2) #allow up to 2 unaccepted connections
+print ("Server started and waiting for players")
+
+def dummyfill():
+    for player in players:
+        player.connection.send([0x40B2])
+
+currplayer = 1
+while len(clientList) < int(conf['General']['Number_of_Players']):
+        conn, addr = serverSocket.accept()
+        print ('Connection address:', addr)
+        players[currplayer].connection = conn
+
 #get loop
 loop = asyncio.get_event_loop()
 
 for player in players:
-    asyncio.ensure_future(input_controller.read_input_events(player))
+    asyncio.ensure_future(input_controller.read_input_events(player, dummyfills))
 
 #start loop
 loop.run_forever()

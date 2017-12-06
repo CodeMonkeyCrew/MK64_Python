@@ -1,4 +1,5 @@
 class Player:
-    number = 0
+    number = 1
     device = None
+    connection = None
     

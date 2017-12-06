@@ -42,7 +42,7 @@ def detect_direction(event):
         if keycode == 0:
             return message_to_hex(Commands.DIRECTION.value, event.value)
 
-async def read_input_events(player):
+async def read_input_events(player, connection):
     async for event in player.device.async_read_loop(): 
         message = [0,0] 
         if event.type == ecodes.EV_KEY:
@@ -50,4 +50,4 @@ async def read_input_events(player):
         elif event.type == ecodes.EV_ABS:
             message =  detect_direction(event)
         if message:
-           send_command_over_spi(message)
+           send_command_over_spi(message, connection)

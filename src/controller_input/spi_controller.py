@@ -11,12 +11,12 @@ spi.max_speed_hz = 9600
 spi.mode = 0b00 # clock polarity 0, clock phase 0
 spi.threewire = False
 
-def send_command_over_spi(message):
+def send_command_over_spi(message, connection):
     try:
         print("send:", message)
         resp = spi.xfer([(message[0] & 0xFF),message[1] & 0XFF])
         print("received: ", resp)
-        time.sleep(0.1)
+        connection.send(resp)
         #end while
     except KeyboardInterrupt:
         spi.close()
