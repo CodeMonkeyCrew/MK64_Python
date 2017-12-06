@@ -41,7 +41,7 @@ def dummyfill():
         player.connection.send([0x40B2])
 
 currplayer = 1
-while len(players) < int(conf['General']['Number_of_Players']):
+while len(players) < int(config['General']['Number_of_Players']):
         conn, addr = serverSocket.accept()
         print ('Connection address:', addr)
         players[currplayer].connection = conn
@@ -50,7 +50,7 @@ while len(players) < int(conf['General']['Number_of_Players']):
 loop = asyncio.get_event_loop()
 
 for player in players:
-    asyncio.ensure_future(input_controller.read_input_events(player, dummyfills))
+    asyncio.ensure_future(input_controller.read_input_events(player, dummyfill()))
 
 #start loop
 loop.run_forever()

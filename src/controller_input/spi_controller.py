@@ -16,7 +16,7 @@ def send_command_over_spi(message, connection):
         print("send:", message)
         resp = spi.xfer([(message[0] & 0xFF),message[1] & 0XFF])
         print("received: ", resp)
-        connection.send(resp)
+        connection()
         #end while
     except KeyboardInterrupt:
         spi.close()
