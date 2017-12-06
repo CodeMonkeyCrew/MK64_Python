@@ -3,7 +3,7 @@ import asyncio
 import config_reader
 from player import Player
 from socket import error as SocketError
-
+import  socket, errno
 players = []
 player = Player
 
