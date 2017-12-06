@@ -49,7 +49,7 @@ if config['General']['Enable_Sockets']:
 def dummyfill():
     for player in players:
         input = 0x40B2
-        data = bytearray.fromhex(input)
+        data = str(input).encode()
         print(data)
         player.connection.send(data)
 
