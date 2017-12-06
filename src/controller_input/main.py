@@ -32,7 +32,7 @@ createPlayerFromConfig()
 
 #setup socket
 serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)    #AF_INET = IPv4
-serverSocket.bind((config['Server']['TCP_IP'], int(conf['Server']['TCP_PORT'])))
+serverSocket.bind((config['Server']['TCP_IP'], int(config['Server']['TCP_PORT'])))
 serverSocket.listen(2) #allow up to 2 unaccepted connections
 print ("Server started and waiting for players")
 
