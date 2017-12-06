@@ -48,9 +48,7 @@ if config['General']['Enable_Sockets']:
 
 def dummyfill():
     for player in players:
-        data = (16562).to_bytes(2, byteorder='big')
-        print(data)
-        player.connection.send(data)
+        player.connection.send("0x40B2".encode())
 
 #get loop
 loop = asyncio.get_event_loop()
