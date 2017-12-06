@@ -36,15 +36,17 @@ serverSocket.bind((config['Server']['TCP_IP'], int(config['Server']['TCP_PORT'])
 serverSocket.listen(2) #allow up to 2 unaccepted connections
 print ("Server started and waiting for players")
 
-def dummyfill():
-    for player in players:
-        player.connection.send([0x40B2])
+
 
 currplayer = 1
 while len(players) < int(config['General']['Number_of_Players']):
         conn, addr = serverSocket.accept()
         print ('Connection address:', addr)
         players[currplayer].connection = conn
+
+def dummyfill():
+    for player in players:
+        player.connection.send([0x40B2])
 
 #get loop
 loop = asyncio.get_event_loop()
