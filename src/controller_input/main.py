@@ -39,15 +39,16 @@ print ("Server started and waiting for players")
 
 
 connectionnumber = 0
-while connectionnumber < int(config['General']['Number_of_Players']):
-        conn, addr = serverSocket.accept()
-        print ('Connection address:', addr)
-        players[connectionnumber].connection = conn
-        connectionnumber +=1
+if config['General']['Enable_Sockets']:
+    while connectionnumber < int(config['General']['Number_of_Players']):
+            conn, addr = serverSocket.accept()
+            print ('Connection address:', addr)
+            players[connectionnumber].connection = conn
+            connectionnumber +=1
 
 def dummyfill():
     for player in players:
-        player.connection.send([0x40B2])
+        player.connection.send(0x40B2)
 
 #get loop
 loop = asyncio.get_event_loop()
