@@ -48,7 +48,8 @@ if config['General']['Enable_Sockets']:
 
 def dummyfill():
     for player in players:
-        player.connection.send(0x40B2)
+        data = bytes.fromhex('0x40B2')
+        player.connection.send(data)
 
 #get loop
 loop = asyncio.get_event_loop()
