@@ -41,7 +41,7 @@ def dummyfill():
         player.connection.send([0x40B2])
 
 currplayer = 1
-while len(clientList) < int(conf['General']['Number_of_Players']):
+while len(players) < int(conf['General']['Number_of_Players']):
         conn, addr = serverSocket.accept()
         print ('Connection address:', addr)
         players[currplayer].connection = conn
