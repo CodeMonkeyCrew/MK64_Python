@@ -18,7 +18,6 @@ def send_receive_over_spi(player, message):
         resp = spi.xfer([(message[0] & 0xFF),message[1] & 0XFF])
         print("received: ", resp)
         player.connection.send(resp)
-    )
         #end while
     except KeyboardInterrupt:
         spi.close()
