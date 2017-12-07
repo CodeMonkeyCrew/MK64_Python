@@ -27,6 +27,7 @@ def dummysend(player):
     data = str(input).encode()
     print(data)
     player.connection.send(data)
+
 #create a message in hex for button events
 def detect_button(event):
     tmp_command = 10
@@ -51,17 +52,19 @@ def detect_direction(event):
         if keycode == 0:
             return message_to_hex(Commands.DIRECTION.value, event.value)
 
-#nothing happened already message
-message = message_to_hex(Commands.NOC, 0) 
+
 
 #read input events from controller
 #send the last command over and over again
 async def read_input_events(player):
     async for event in player.device.async_read_loop(): 
+        #nothing happened already message
+        message = message_to_hex(Commands.NOC, 0) 
         if event.type == ecodes.EV_KEY:
             message = detect_button(event)
         elif event.type == ecodes.EV_ABS:
             message =  detect_direction(event)
+        print(message)
         if message:
            #send_receive_over_spi(player, message)
            dummysend(player)
