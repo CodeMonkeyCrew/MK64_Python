@@ -16,6 +16,17 @@ class Commands(Enum):
 def init_input_device(port):
     return evdev.InputDevice(port)
 
+#create array for keycommand
+def message_to_hex(keycode, keyvalue):
+    return [keycode, keyvalue]
+
+
+#dummy methode to test the sending over socket
+def dummysend(player):
+    input = 0x40B2
+    data = str(input).encode()
+    print(data)
+    player.connection.send(data)
 #create a message in hex for button events
 def detect_button(event):
     tmp_command = 10
@@ -55,14 +66,3 @@ async def read_input_events(player):
            #send_receive_over_spi(player, message)
            dummysend(player)
 
-#create array for keycommand
-def message_to_hex(keycode, keyvalue):
-    return [keycode, keyvalue]
-
-
-#dummy methode to test the sending over socket
-def dummysend(player):
-    input = 0x40B2
-    data = str(input).encode()
-    print(data)
-    player.connection.send(data)
