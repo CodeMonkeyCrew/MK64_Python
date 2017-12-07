@@ -1,8 +1,7 @@
 from evdev import InputDevice, categorize, ecodes, KeyEvent
 from n64_keymap import N64_KEYS
 import asyncio, evdev
-from message_creator import message_to_hex
-from spi_controller import send_command_over_spi
+from spi_controller import send_receive_over_spi
 from enum import Enum
 
 class Commands(Enum):
@@ -28,8 +27,7 @@ def detect_button(event):
     elif(keycode == N64_KEYS.START.value):
         tmp_command = Commands.START
     elif(keycode == N64_KEYS.Z.value):
-        tmp_command = Commands.USE
-    
+        tmp_command = Commands.USE 
     if tmp_command.value <10:
         return message_to_hex(tmp_command.value, event.value)
 
@@ -42,12 +40,29 @@ def detect_direction(event):
         if keycode == 0:
             return message_to_hex(Commands.DIRECTION.value, event.value)
 
-async def read_input_events(player, connection):
+#nothing happened already message
+message = message_to_hex(Commands.NOC, 0) 
+
+#read input events from controller
+#send the last command over and over again
+async def read_input_events(player):
     async for event in player.device.async_read_loop(): 
-        message = [0,0] 
         if event.type == ecodes.EV_KEY:
             message = detect_button(event)
         elif event.type == ecodes.EV_ABS:
             message =  detect_direction(event)
         if message:
-           send_command_over_spi(message, connection)
+           #send_receive_over_spi(player, message)
+           dummysend(player)
+
+#create array for keycommand
+def message_to_hex(keycode, keyvalue):
+    return [keycode, keyvalue]
+
+
+#dummy methode to test the sending over socket
+def dummysend(player):
+    input = 0x40B2
+    data = str(input).encode()
+    print(data)
+    player.connection.send(data)

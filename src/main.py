@@ -10,11 +10,10 @@ player = Player
 # Read Settings
 config = config_reader.read_config('settings.ini')
 
-# Create Players from settingsmessage
+# Helper to create the number of players defined in the settings
 def createPlayerFromConfig():
     curr_numb = 0
     for port in config['Controller']:
-       # player = Player()
         global player
         input_port = config['Controller'][port]
         print(input_port)
@@ -27,17 +26,17 @@ def createPlayerFromConfig():
 
 
 # Start
-# Config Player
+# create Player
 createPlayerFromConfig()
 
 #setup socket
 serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)    #AF_INET = IPv4
-serverSocket.bind((config['Server']['TCP_IP'], int(config['Server']['TCP_PORT'])))
-serverSocket.listen(2) #allow up to 2 unaccepted connections
+serverSocket.bind((config['Server']['TCP_IP'], int(config['Server']['TCP_Port'])))
+serverSocket.listen(config['General']['Number_of_Player']) #max is max number of players
 print ("Server started and waiting for players")
 
 
-
+#wait for all connections to be established
 connectionnumber = 0
 if config['General']['Enable_Sockets']:
     while connectionnumber < int(config['General']['Number_of_Players']):
@@ -46,19 +45,17 @@ if config['General']['Enable_Sockets']:
             players[connectionnumber].connection = conn
             connectionnumber +=1
 
-def dummyfill():
-    for player in players:
-        input = 0x40B2
-        data = str(input).encode()
-        print(data)
-        player.connection.send(data)
 
 #get loop
 loop = asyncio.get_event_loop()
 
+#start listening for each player
 for player in players:
-    asyncio.ensure_future(input_controller.read_input_events(player, dummyfill()))
+    #asyncio.ensure_future(input_controller.read_input_events(player))
+    asyncio.ensure_future(input_controller.read_input_events(player))
 
 #start loop
 loop.run_forever()
+
+#on interrupt shut down
 loop.close()
