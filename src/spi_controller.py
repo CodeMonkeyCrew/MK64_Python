@@ -1,6 +1,6 @@
 import spidev
 import time
-import BrokenPipeError, IOError
+from sys
 
 spi = spidev.SpiDev()
 spi.open(0, 0)
