@@ -25,10 +25,13 @@ def message_to_hex(keycode, keyvalue):
 #dummy methode to test the sending over socket
 def dummysend(player):
     input = 0x2206
-    data = str(input).encode()
-    print(data)
-    player.connection.send(data)
-    time.sleep(1)
+    currentstate = []
+    if currentstate != input:
+        currentstate = input
+        data = str(currentstate).encode()
+        print(data)
+        player.connection.send(data)
+   
     
 #create a message in hex for button events
 def detect_button(event):
