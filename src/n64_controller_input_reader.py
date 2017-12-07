@@ -3,6 +3,7 @@ from n64_keymap import N64_KEYS
 import asyncio, evdev
 from spi_controller import send_receive_over_spi
 from enum import Enum
+import time
 
 class Commands(Enum):
     DIRECTION = 1
@@ -27,7 +28,8 @@ def dummysend(player):
     data = str(input).encode()
     print(data)
     player.connection.send(data)
-
+    time.sleep(1)
+    
 #create a message in hex for button events
 def detect_button(event):
     tmp_command = 10
