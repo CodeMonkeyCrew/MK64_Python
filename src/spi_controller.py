@@ -1,6 +1,5 @@
 import spidev
 import time
-import socket
 
 spi = spidev.SpiDev()
 spi.open(0, 0)
@@ -14,15 +13,16 @@ spi.threewire = False
 #send data to server over spi and recieve the gamestat
 #the gamestate is forwerded to the connected clients
 def send_receive_over_spi(player, message):
+    currentstate = []
     try:
         print("send:", message)
         resp = spi.xfer([(message[0] & 0xFF),message[1] & 0XFF])
         print("received: ", resp)
-        player.connection.send(resp)
+        if currentstate != resp:
+            currentstate = resp
+            player.connection.send(currentstate)      
         #end while
     except KeyboardInterrupt:
         spi.close()
-    except socket.error:
-        player.connection.close()
     #end try 
 
