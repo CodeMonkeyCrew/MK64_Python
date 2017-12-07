@@ -1,5 +1,6 @@
 import spidev
 import time
+import BrokenPipeError, IOError
 
 spi = spidev.SpiDev()
 spi.open(0, 0)
@@ -21,5 +22,7 @@ def send_receive_over_spi(player, message):
         #end while
     except KeyboardInterrupt:
         spi.close()
+    except (BrokenPipeError, IOError):
+        player.connection.close()
     #end try 
 
