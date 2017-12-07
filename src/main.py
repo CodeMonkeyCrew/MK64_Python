@@ -32,7 +32,7 @@ createPlayerFromConfig()
 #setup socket
 serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)    #AF_INET = IPv4
 serverSocket.bind((config['Server']['TCP_IP'], int(config['Server']['TCP_Port'])))
-serverSocket.listen(config['General']['Number_of_Players']) #max is max number of players
+serverSocket.listen(int(config['General']['Number_of_Players'])) #max is max number of players
 print ("Server started and waiting for players")
 
 
