@@ -58,7 +58,7 @@ try:
     #start loop
     loop.run_forever()
 except KeyboardInterrupt:
-    print("W: interrupt received, stopping…")
+    print("W: interrupt received, stopping...")
 finally:
     print("Close Server ..")
     serverSocket.close()

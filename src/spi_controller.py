@@ -33,6 +33,7 @@ def send_receive_over_spi(player, message):
             for package in resp:
                 tmp = merge_hex(hex_result, reverse_bits(package), offset)
                 offset += 1
+            print(tmp)
             player.connection.send(str(hex_result).encode())   
     except KeyboardInterrupt:
         spi.close()
