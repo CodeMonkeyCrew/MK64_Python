@@ -13,18 +13,19 @@ spi.mode = 0b00 # clock polarity 0, clock phase 0
 spi.threewire = False
 #send data to server over spi and recieve the gamestat
 #the gamestate is forwerded to the connected clients
-def merge(a, b):
-    return 256 * a + b
+def merge(a, b, index):
+    return b >> (8*index) | a
 
 def send_receive_over_spi(player, message):
     try:
         print("send:", message)
         resp = spi.xfer([(message[0].value & 0xFF),message[1] & 0XFF, 0x00, 0x00])
-        print("received: ", resp)
         if resp:
             tmp = 0
+            index = 0
             for item in resp:
-                tmp = merge(tmp, item)
+                tmp = merge(tmp, 1, index)
+                index += 1
             result = str(tmp).encode()
             print(result)
             player.connection.send(result)      
