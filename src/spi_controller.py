@@ -31,9 +31,9 @@ def send_receive_over_spi(player, message):
             hex_result = 0
             offset = 0
             for package in resp:
-                tmp = merge_hex(hex_result, reverse_bits(package), offset)
+                hex_result = merge_hex(hex_result, reverse_bits(package), offset)
                 offset += 1
-            print(tmp)
+            print(hex_result)
             player.connection.send(str(hex_result).encode())   
     except KeyboardInterrupt:
         spi.close()
