@@ -27,7 +27,6 @@ def send_receive_over_spi(player, message):
         print("send:", message)
         resp = spi.xfer([(message[0].value & 0xFF),message[1] & 0XFF, 0x00, 0x00])
         if resp:
-            for byt in resp:
             tmp = 0
             index = 0
             for item in resp:
