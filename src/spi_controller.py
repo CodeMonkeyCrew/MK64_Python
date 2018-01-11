@@ -25,8 +25,9 @@ def send_receive_over_spi(player, message):
             tmp = 0
             for item in resp:
                 tmp = merge(tmp, item)
-            print(tmp)
-            player.connection.send(str(tmp).encode())      
+            result = str(tmp).encode()
+            print(result)
+            player.connection.send(result)      
         #end while
     except KeyboardInterrupt:
         spi.close()
