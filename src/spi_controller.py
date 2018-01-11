@@ -17,10 +17,10 @@ spi.threewire = False
 def send_receive_over_spi(player, message):
     try:
         print("send:", message)
-        resp = spi.xfer([(message[0].value & 0xFF),message[1] & 0XFF])
+        resp = spi.xfer([(message[0].value & 0xFF),message[1] & 0XFF, 0x00, 0x00])
         print("received: ", resp)
         if resp:
-            player.connection.send(resp)      
+            player.connection.send(pickle.dumps(resp))      
         #end while
     except KeyboardInterrupt:
         spi.close()
