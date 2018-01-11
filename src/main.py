@@ -60,8 +60,8 @@ try:
 except KeyboardInterrupt:
     print("W: interrupt received, stopping…")
 finally:
-    console.log("Close Server ..")
+    print("Close Server ..")
     serverSocket.close()
     #on interrupt shut down
     loop.close()
-    console.log("Server Closed!")
+    print("Server Closed!")
