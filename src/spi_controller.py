@@ -24,7 +24,7 @@ def send_receive_over_spi(player, message):
             tmp = 0
             index = 0
             for item in resp:
-                tmp = merge(tmp, 1, index)
+                tmp = merge(tmp, item, index)
                 index += 1
             result = str(tmp).encode()
             print(result)
