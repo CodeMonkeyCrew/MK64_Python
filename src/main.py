@@ -43,7 +43,7 @@ if config['General']['Enable_Sockets']:
             conn, addr = serverSocket.accept()
             print ('Connection address:', addr)
             players[connectionnumber].connection = conn
-            conn.send(str(connectionnumber).encode())
+            conn.send(str(player.number).encode())
             connectionnumber +=1
 
 
