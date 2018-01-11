@@ -26,15 +26,15 @@ def reverse_bits(byte):
 #send command and reiceive data. forward the data over websocket
 def send_receive_over_spi(player, message):
     try:
-        resp = spi.xfer([(message[0].value & 0xFF),message[1] & 0XFF, 0x00, 0x00])
+        resp = spi.xfer([(message[0].value & 0xFF), message[1] & 0XFF, 0x00, 0x00])
         if resp:
             hex_result = 0
             offset = 0
             for package in resp:
                 hex_result = merge_hex(hex_result, reverse_bits(package), offset)
                 offset += 1
-            print(hex_result)
-            player.connection.send(str(hex_result).encode())   
+            player.connection.send(str(hex_result).encode())
+            time.sleep(0.1)   
     except KeyboardInterrupt:
         spi.close()
 
