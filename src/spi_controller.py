@@ -1,5 +1,6 @@
 import spidev
 import time
+import pickle
 
 spi = spidev.SpiDev()
 spi.open(0, 0)
@@ -21,7 +22,7 @@ def send_receive_over_spi(player, message):
         print("received: ", resp)
         if currentstate != resp:
             currentstate = resp
-            player.connection.send(currentstate)      
+            player.connection.send(pickle.dumps(currentstate))      
         #end while
     except KeyboardInterrupt:
         spi.close()
