@@ -32,7 +32,7 @@ def send_receive_over_spi(player, message):
             tmp = 0
             index = 0
             for item in resp:
-                tmp = merge(tmp, reverse_bits(item), index)
+                tmp = merge_hex(tmp, reverse_bits(item), index)
                 index += 1
             result = str(tmp).encode()
             print(result)
