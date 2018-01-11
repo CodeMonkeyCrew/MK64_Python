@@ -16,7 +16,6 @@ def createPlayerFromConfig():
     for port in config['Controller']:
         global player
         input_port = config['Controller'][port]
-        print(input_port)
         if input_port:
             player.number = curr_numb
             player.device = input_controller.init_input_device(input_port)
@@ -52,7 +51,6 @@ loop = asyncio.get_event_loop()
 
 #start listening for each player
 for player in players:
-    #asyncio.ensure_future(input_controller.read_input_events(player))
     asyncio.ensure_future(input_controller.read_input_events(player))
 
 #start loop
