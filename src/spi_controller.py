@@ -8,7 +8,7 @@ spi.bits_per_word = 8
 spi.cshigh = False
 spi.loop = False
 spi.lsbfirst = False
-spi.max_speed_hz = 9600
+spi.max_speed_hz = 6400000
 spi.mode = 0b00 # clock polarity 0, clock phase 0
 spi.threewire = False
 
@@ -27,12 +27,13 @@ def reverse_bits(byte):
 def send_receive_over_spi(player, message):
     try:
         print("send:", message)
-        resp = spi.xfer([(message[0].value & 0xFF),message[1] & 0XFF, 0x00, 0x00])
-        if resp == 4:
+        resp = spi.xfer2([(message[0].value & 0xFF),message[1] & 0XFF, 0x00, 0x00])
+        time.sleep(1)
+        if resp:
             tmp = 0
             index = 3
             for item in resp:
-                tmp = merge_hex(tmp, reverse_bits(item), index)
+                tmp = merge_hex(tmp, item, index)
                 index -= 1
             result = str(tmp).encode()
             print(result)
