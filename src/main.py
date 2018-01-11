@@ -47,22 +47,21 @@ if config['General']['Enable_Sockets']:
             conn.send(str(player.number).encode())
             connectionnumber +=1
 
+try:
+    #get loop
+    loop = asyncio.get_event_loop()
 
-#get loop
-loop = asyncio.get_event_loop()
+    #start listening for each player
+    for player in players:
+        asyncio.ensure_future(input_controller.read_input_events(player))
 
-#start listening for each player
-for player in players:
-    asyncio.ensure_future(input_controller.read_input_events(player))
-
-#start loop
-loop.run_forever()
-
-def close():
+    #start loop
+    loop.run_forever()
+except KeyboardInterrupt:
+    print("W: interrupt received, stopping…")
+finally:
     console.log("Close Server ..")
     serverSocket.close()
     #on interrupt shut down
     loop.close()
     console.log("Server Closed!")
-
-atexit.register(close)
