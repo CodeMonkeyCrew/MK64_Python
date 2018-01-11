@@ -5,7 +5,7 @@ import pickle
 spi = spidev.SpiDev()
 spi.open(0, 0)
 spi.bits_per_word = 8
-spi.cshigh = False
+spi.cshigh = True
 spi.loop = False
 spi.lsbfirst = False
 spi.max_speed_hz = 9600
@@ -16,19 +16,28 @@ spi.threewire = False
 def merge(a, b, index):
     return b >> (8*index) | a
 
+def reverse_bits(byte):
+    byte = ((byte & 0xF0) >> 4) | ((byte & 0x0F) << 4)
+    byte = ((byte & 0xCC) >> 2) | ((byte & 0x33) << 2)
+    byte = ((byte & 0xAA) >> 1) | ((byte & 0x55) << 1)
+    return byte
+
 def send_receive_over_spi(player, message):
     try:
         print("send:", message)
         resp = spi.xfer([(message[0].value & 0xFF),message[1] & 0XFF, 0x00, 0x00])
         if resp:
-            tmp = 0
-            index = 0
-            for item in resp:
-                tmp = merge(tmp, item, index)
-                index += 1
-            result = str(tmp).encode()
-            print(result)
-            player.connection.send(result)      
+            for byt in resp:
+                print(reverse_bits(resp))
+            #tmp = 0
+            #index = 0
+            #for item in resp:
+            #    tmp = merge(tmp, item, index)
+            #    index += 1
+            #result = str(tmp).encode()
+            #print(result)
+            #player.connection.send(result)
+            #time.sleep(0.1)      
         #end while
     except KeyboardInterrupt:
         spi.close()
