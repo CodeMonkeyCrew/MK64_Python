@@ -20,19 +20,6 @@ def init_input_device(port):
 #create array for keycommand
 def message_to_hex(keycode, keyvalue):
     return [keycode, keyvalue]
-
-
-#dummy methode to test the sending over socket
-currentstate = 0x00
-def dummysend(player):
-    global currentstate
-    input = 0x2206
-    if currentstate != input:
-        currentstate = input
-        data = str(currentstate).encode()
-        print(data)
-        player.connection.send(data)
-   
     
 #create a message in hex for button events
 def detect_button(event):
@@ -70,7 +57,6 @@ async def read_input_events(player):
             message = detect_button(event)
         elif event.type == ecodes.EV_ABS:
             message =  detect_direction(event)
-        print(message)
         if message:
            send_receive_over_spi(player, message)
 
