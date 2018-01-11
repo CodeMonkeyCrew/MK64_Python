@@ -58,7 +58,7 @@ for player in players:
 #start loop
 loop.run_forever()
 
-def close:
+def close():
     console.log("Close Server ..")
     serverSocket.close()
     #on interrupt shut down
