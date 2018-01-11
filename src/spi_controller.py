@@ -15,14 +15,12 @@ spi.threewire = False
 #the gamestate is forwerded to the connected clients
 
 def send_receive_over_spi(player, message):
-    currentstate = []
     try:
         print("send:", message)
         resp = spi.xfer([(message[0].value & 0xFF),message[1] & 0XFF])
         print("received: ", resp)
-        if currentstate != resp:
-            currentstate = resp
-            player.connection.send(pickle.dumps(currentstate))      
+        if resp:
+            player.connection.send(resp)      
         #end while
     except KeyboardInterrupt:
         spi.close()
