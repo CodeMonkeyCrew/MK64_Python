@@ -4,6 +4,8 @@ import config_reader
 from player import Player
 from socket import error as SocketError
 import  socket, errno
+import atexit
+#defines
 players = []
 player = Player
 
@@ -56,5 +58,11 @@ for player in players:
 #start loop
 loop.run_forever()
 
-#on interrupt shut down
-loop.close()
+def close:
+    console.log("Close Server ..")
+    serverSocket.close()
+    #on interrupt shut down
+    loop.close()
+    console.log("Server Closed!")
+
+atexit.register(close)
