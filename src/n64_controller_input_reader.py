@@ -72,6 +72,6 @@ async def read_input_events(player):
             message =  detect_direction(event)
         print(message)
         if message:
-           #send_receive_over_spi(player, message)
-           dummysend(player)
+           send_receive_over_spi(player, message)
+           #dummysend(player)
 
