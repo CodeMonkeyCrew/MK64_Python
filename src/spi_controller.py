@@ -5,7 +5,7 @@ import pickle
 spi = spidev.SpiDev()
 spi.open(0, 0)
 spi.bits_per_word = 8
-spi.cshigh = True
+spi.cshigh = False
 spi.loop = False
 spi.lsbfirst = False
 spi.max_speed_hz = 9600
@@ -14,7 +14,7 @@ spi.threewire = False
 #send data to server over spi and recieve the gamestat
 #the gamestate is forwerded to the connected clients
 def merge(a, b, index):
-    return b >> (8*index) | a
+    return b << (8*index) | a
 
 def reverse_bits(byte):
     byte = ((byte & 0xF0) >> 4) | ((byte & 0x0F) << 4)
@@ -28,16 +28,14 @@ def send_receive_over_spi(player, message):
         resp = spi.xfer([(message[0].value & 0xFF),message[1] & 0XFF, 0x00, 0x00])
         if resp:
             for byt in resp:
-                print(reverse_bits(resp))
-            #tmp = 0
-            #index = 0
-            #for item in resp:
-            #    tmp = merge(tmp, item, index)
-            #    index += 1
-            #result = str(tmp).encode()
-            #print(result)
-            #player.connection.send(result)
-            #time.sleep(0.1)      
+            tmp = 0
+            index = 0
+            for item in resp:
+                tmp = merge(tmp, reverse_bits(item), index)
+                index += 1
+            result = str(tmp).encode()
+            print(result)
+            player.connection.send(result)   
         #end while
     except KeyboardInterrupt:
         spi.close()
