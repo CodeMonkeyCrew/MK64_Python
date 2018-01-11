@@ -25,7 +25,7 @@ def message_to_hex(keycode, keyvalue):
 #dummy methode to test the sending over socket
 currentstate = 0x00
 def dummysend(player):
-    input = 0x2206´
+    input = 0x2206
     if currentstate != input:
         currentstate = input
         data = str(currentstate).encode()
