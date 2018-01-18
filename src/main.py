@@ -13,7 +13,7 @@ player = Player
 config = config_reader.read_config('settings.ini')
 
 # Helper to create the number of players defined in the settings
-def createPlayerFromConfig():
+def createPlayerFromConfig(): 
     curr_numb = 0
     for port in config['Controller']:
         global player
@@ -28,7 +28,15 @@ def createPlayerFromConfig():
 
 # Start
 # create Player
-createPlayerFromConfig()
+async def createPlayerFromConfig():
+    connectionnumber = 0
+    if config['General']['Enable_Sockets']:
+        while connectionnumber < int(config['General']['Number_of_Players']):
+            conn, addr = serverSocket.accept()
+            print ('Connection address:', addr)
+            players[connectionnumber].connection = conn
+            conn.send(str(player.number).encode())
+            connectionnumber +=1
 
 #setup socket
 serverSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)    #AF_INET = IPv4
@@ -36,16 +44,9 @@ serverSocket.bind((config['Server']['TCP_IP'], int(config['Server']['TCP_Port'])
 serverSocket.listen(int(config['General']['Number_of_Players'])) #max is max number of players
 print ("Server started and waiting for players")
 
-
+asyncio waitconnection
 #wait for all connections to be established
-connectionnumber = 0
-if config['General']['Enable_Sockets']:
-    while connectionnumber < int(config['General']['Number_of_Players']):
-            conn, addr = serverSocket.accept()
-            print ('Connection address:', addr)
-            players[connectionnumber].connection = conn
-            conn.send(str(player.number).encode())
-            connectionnumber +=1
+
 
 try:
     #get loop
